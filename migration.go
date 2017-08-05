@@ -7,7 +7,6 @@ import (
 	"unicode"
 	"strings"
 	"database/sql"
-	_ "github.com/lib/pq"
 )
 
 type MigServ struct {
