@@ -20,14 +20,16 @@ func Migration (values... interface{}, db *sql.DB) error {
 		st, err := tx.Prepare(esql)
 		if err != nil {
 			log.Printf("%+v\n", err)
+			tx.Rollback()
 			return err
 		}
 		_, err = st.Exec()
 		if err != nil {
 			log.Printf("%+v\n", err)
+			tx.Rollback()
 			return err
 		}
-		return nil
+		return tx.Commit()
 	}
 }
 
@@ -59,4 +61,9 @@ func TableName(name string) string {
 		}
 	}
 	return strings.ToLower(tableName)
+}
+
+//判断表是否存在.
+func HasTable(table string,  *sql.DB) bool {
+
 }
